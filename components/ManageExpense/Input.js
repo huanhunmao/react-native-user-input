@@ -1,9 +1,14 @@
-import { Input, Text, TextInput } from 'react-native'
+import { View, Text, TextInput } from 'react-native'
 
-function Input({ label, textInputConfig }){
-    <View>
+function Input({ label, keyboardType,maxLength,onChangeText,placeholder }){
+    return <View>
         <Text>{label}</Text>
-        <TextInput>{...textInputConfig}</TextInput>
+        <TextInput 
+        keyboardType={keyboardType}
+        maxLength={maxLength}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+         />
     </View>
 }
 
