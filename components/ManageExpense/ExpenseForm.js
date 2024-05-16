@@ -2,7 +2,7 @@ import React,{ useState } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import Input from './Input';
 
-function ExpenseForm({ ifIsEditing, cancelHandler }){
+function ExpenseForm({ ifIsEditing, cancelHandler, onSubmit }){
     const [inputValues, setInputValues] = useState({
         amount: '',
         date: '',
@@ -17,16 +17,29 @@ function ExpenseForm({ ifIsEditing, cancelHandler }){
         }
     })
 
-    console.log('inputValues',inputValues)
+    // console.log('inputValues',inputValues)
     // {amount: '123', date: '666', description: '7777'}
   }
 
   function submitHandler(){
-    
-  }
+    const amountValue = parseFloat(inputValues.amount);
+    if (isNaN(amountValue)) {
+        // 处理无效的金额输入
+        return;
+    }
+    const expenseData = {
+        amount: amountValue,
+        date: new Date(inputValues.date),
+        description: inputValues.description,
+    }
+
+    console.log('object', expenseData);
+    onSubmit(expenseData);
+}
+
 
   return (
-    <View style={styles.form} onSubmit={submitHandler}>
+    <View style={styles.form}>
         <Text style={styles.title}>Your Expense</Text>
         <View style={styles.inputsRow}>
       <Input 
@@ -41,14 +54,14 @@ function ExpenseForm({ ifIsEditing, cancelHandler }){
         label="Date"
         placeholder="YYYY-MM-DD"
         maxLength={10}
-        value={inputValues.amount}
+        value={inputValues.date}
         onChangeText={inputChangeHandler.bind(this, 'date')}
       />
         </View>
       <Input 
       label="Description" 
       multiline={true}
-      value={inputValues.amount}
+      value={inputValues.description}
       onChangeText={inputChangeHandler.bind(this,'description')} 
       />
 
