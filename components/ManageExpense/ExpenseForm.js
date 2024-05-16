@@ -15,7 +15,10 @@ function ExpenseForm() {
         maxLength={10}
         onChangeText={amountChangeHandler}
       />
-      <Input label="Description" onChangeText={amountChangeHandler} />
+      <Input label="Description" 
+      onChangeText={amountChangeHandler} 
+      multiline={true}
+      />
     </View>
   );
 }
