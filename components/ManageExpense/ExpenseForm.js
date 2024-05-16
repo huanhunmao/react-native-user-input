@@ -1,12 +1,12 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
 import Input from './Input';
 
-function ExpenseForm({ ifIsEditing, cancelHandler, onSubmit }){
+function ExpenseForm({ ifIsEditing, cancelHandler, onSubmit, defaultValues }){
     const [inputValues, setInputValues] = useState({
-        amount: '',
-        date: '',
-        description: ''
+        amount: defaultValues ? defaultValues.amount.toString() : '',
+        date: defaultValues ? defaultValues.date.toISOString().slice(0,10) : '',
+        description: defaultValues ? defaultValues.description : ''
     })
 
   function inputChangeHandler(inputIdentifier, enterValue) {
@@ -33,7 +33,6 @@ function ExpenseForm({ ifIsEditing, cancelHandler, onSubmit }){
         description: inputValues.description,
     }
 
-    console.log('object', expenseData);
     onSubmit(expenseData);
 }
 
