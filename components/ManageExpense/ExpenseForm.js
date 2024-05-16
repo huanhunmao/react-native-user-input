@@ -1,5 +1,5 @@
 import React,{ useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert } from 'react-native';
 import Input from './Input';
 
 function ExpenseForm({ ifIsEditing, cancelHandler, onSubmit, defaultValues }){
@@ -23,14 +23,23 @@ function ExpenseForm({ ifIsEditing, cancelHandler, onSubmit, defaultValues }){
 
   function submitHandler(){
     const amountValue = parseFloat(inputValues.amount);
-    if (isNaN(amountValue)) {
-        // 处理无效的金额输入
-        return;
-    }
     const expenseData = {
         amount: amountValue,
         date: new Date(inputValues.date),
         description: inputValues.description,
+    }
+
+    const amountIsValid = !isNaN(expenseData.amount) && expenseData.amount > 0
+    const dateIsValid = expenseData.date.toString() !== 'Invalid Date'
+    const descriptionIsValid = expenseData.description.trim().length > 0 
+
+    console.log('amountIsValid',amountIsValid);
+    console.log('dateIsValid',dateIsValid);
+    console.log('descriptionIsValid',descriptionIsValid);
+    if (!amountIsValid || !dateIsValid || !descriptionIsValid) {
+        // 处理无效的金额输入
+        Alert.alert('Invalid input', 'Please check your input values')
+        return;
     }
 
     onSubmit(expenseData);
