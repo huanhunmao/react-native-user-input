@@ -3,6 +3,10 @@ import { View, Text, StyleSheet } from 'react-native';
 import Input from './Input';
 
 function ExpenseForm() {
+    // 数据绑定 常规做法 绑定3个值 
+    const [amount, setAmount] = useState('')
+    const [date, setDate] = useState('')
+    const [description, setDescription] = useState('')
   function amountChangeHandler() {
   }
 
