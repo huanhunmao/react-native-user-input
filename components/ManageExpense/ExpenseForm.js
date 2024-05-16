@@ -1,37 +1,51 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Input from './Input';
 
 function ExpenseForm() {
-    // 数据绑定 常规做法 绑定3个值 
-    const [amount, setAmount] = useState('')
-    const [date, setDate] = useState('')
-    const [description, setDescription] = useState('')
-  function amountChangeHandler() {
+    const [inputValues, setInputValues] = useState({
+        amount: '',
+        date: '',
+        description: ''
+    })
+
+  function inputChangeHandler(inputIdentifier, enterValue) {
+    setInputValues(curInputValue => {
+        return {
+            ...curInputValue,
+            [inputIdentifier]:enterValue,
+        }
+    })
+
+    console.log('inputValues',inputValues)
+    // {amount: '123', date: '666', description: '7777'}
   }
 
   return (
     <View style={styles.form}>
-    <Text style={styles.title}>Your Expense</Text>
-    <View style={styles.inputsRow}>
+        <Text style={styles.title}>Your Expense</Text>
+        <View style={styles.inputsRow}>
       <Input 
       label="Amount" 
       keyboardType="decimal-pad" 
-      onChangeText={amountChangeHandler} 
       style={styles.rowInput} 
+      value={inputValues.amount}
+      onChangeText={inputChangeHandler.bind(this, 'amount')} 
       />
       <Input
         style={styles.rowInput}
         label="Date"
         placeholder="YYYY-MM-DD"
         maxLength={10}
-        onChangeText={amountChangeHandler}
+        value={inputValues.amount}
+        onChangeText={inputChangeHandler.bind(this, 'date')}
       />
         </View>
       <Input 
       label="Description" 
-      onChangeText={amountChangeHandler} 
       multiline={true}
+      value={inputValues.amount}
+      onChangeText={inputChangeHandler.bind(this,'description')} 
       />
     </View>
   );
